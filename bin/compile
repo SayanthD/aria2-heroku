@@ -1,26 +1,24 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 indent() {
   sed -u 's/^/       /'
 }
 
-echo "-----> Install aria2c"
 BUILD_DIR=$1
 VENDOR_DIR="vendor"
-FILE="aria2-1.35.0-linux-gnu-64bit-build1"
-DOWNLOAD_URL="https://github.com/q3aql/aria2-static-builds/releases/download/v1.35.0/$FILE.tar.bz2"
 
+VERSION="1.36.0"
+FOLDER="aria2-$VERSION-linux-gnu-64bit-build1"
+DOWNLOAD_URL="https://github.com/q3aql/aria2-static-builds/releases/download/v$VERSION/$FOLDER.tar.bz2"
+
+echo "-----> Installing aria2c v$VERSION"
 echo "DOWNLOAD_URL = " $DOWNLOAD_URL | indent
 
 cd $BUILD_DIR
-mkdir -p $VENDOR_DIR
-cd $VENDOR_DIR
-mkdir -p aria2c
-cd aria2c
-wget -q $DOWNLOAD_URL
-tar jxf $FILE.tar.bz2
-mv $FILE/* .
-rm -rf $FILE $FILE.tar.bz2
+mkdir -p $VENDOR_DIR/aria2c && cd $VENDOR_DIR/aria2c
+wget -qO- $DOWNLOAD_URL | tar xjf -
+mv $FOLDER/* .
+rm -rf $FOLDER
 
 echo "exporting PATH" | indent
 PROFILE_PATH="$BUILD_DIR/.profile.d/aria2c.sh"

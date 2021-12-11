@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 # this pack is valid for all apps
 echo "aria2c"
